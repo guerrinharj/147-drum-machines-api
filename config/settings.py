@@ -35,7 +35,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "kits"
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "rest_framework",
+    "kits",
 ]
 
 MIDDLEWARE = [

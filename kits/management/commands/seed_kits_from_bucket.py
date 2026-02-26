@@ -27,6 +27,28 @@ def unique_slug(base_slug: str) -> str:
         i += 1
 
 
+def list_all(storage, prefix: str, batch_size: int = 1000):
+    """
+    Supabase Storage list() is paginated (default max ~100 items).
+    This helper fetches all items using limit/offset.
+    """
+    out = []
+    offset = 0
+
+    while True:
+        page = storage.list(prefix, {"limit": batch_size, "offset": offset})
+        if not page:
+            break
+
+        out.extend(page)
+        offset += len(page)
+
+        if len(page) < batch_size:
+            break
+
+    return out
+
+
 class Command(BaseCommand):
     help = "Seed Kit rows from Supabase Storage: one kit per folder, samples[] = storage paths."
 
@@ -55,7 +77,7 @@ class Command(BaseCommand):
         dry_run = opts["dry_run"]
 
         # List kit folders under base_prefix (e.g. "samples/")
-        top_items = storage.list(base_prefix)
+        top_items = list_all(storage, base_prefix, batch_size=1000)
         kit_folders = sorted([obj.get("name") for obj in top_items if obj.get("name")])
 
         self.stdout.write(f"Found {len(kit_folders)} kit folders under '{base_prefix}/' in bucket '{bucket}'")
@@ -70,7 +92,7 @@ class Command(BaseCommand):
             # IMPORTANT: we keep exact folder name for paths
             folder_prefix = f"{base_prefix}/{folder_name}"
 
-            items = storage.list(folder_prefix)
+            items = list_all(storage, folder_prefix, batch_size=1000)
 
             sample_paths = []
             for it in items:
