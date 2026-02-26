@@ -8,8 +8,6 @@ class Kit(models.Model):
     description = models.TextField(blank=True, default="")
     image_path = models.CharField(max_length=500, blank=True, default="")
 
-    # Array of strings (paths in Supabase Storage), e.g.:
-    # ["samples/Roland TR808/kick.wav", "samples/Roland TR808/snare.wav"]
     samples = models.JSONField(default=list, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)

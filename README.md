@@ -1,9 +1,7 @@
-# 147 Drum Machines API (Django + Supabase)
+# 147 Drum Machines API (Django)
 
 Backend API for **147 Drum Machines**.
 - Django + Django REST Framework
-- Supabase Postgres (DB)
-- Supabase Storage (audio + images via signed URLs)
 
 ---
 
@@ -36,7 +34,7 @@ Note: zsh needs quotes for psycopg[binary].
 
 ```zsh
 python -m pip install --upgrade pip
-python -m pip install django djangorestframework python-dotenv supabase "psycopg[binary]"
+python -m pip install django djangorestframework python-dotenv "psycopg[binary]"
 ```
 
 #### 3. Create .env
@@ -46,18 +44,6 @@ Create a file named .env in the project root (same folder as manage.py):
 DJANGO_SECRET_KEY=change-me
 DEBUG=1
 
-##### Supabase Postgres
-DB_NAME=xxx
-DB_USER=xxx
-DB_PASSWORD=xxx
-DB_HOST=xxx
-DB_PORT=5432
-
-##### Supabase Storage
-SUPABASE_URL=xxx
-SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
-SUPABASE_BUCKET=xxx
-SUPABASE_BASE_PREFIX=xxx
 
 
 #### 4. Run migrations
